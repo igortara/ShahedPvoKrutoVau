@@ -9,53 +9,149 @@
   <link rel="shortcut icon" href="images/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/leaflet.css">
   <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <div id="controlPanel" class="panel" style="display:none;">
-    
-    <div id="dragHandle"></div>
-    <div class="panel-body">
-      <div>💰: <span id="money">3000</span></div>
-      <div>🌊: <span id="waveDisplay">1</span></div>
-      <div>🎯: <span id="scoreDisplay">0</span></div>
-      <hr>
-    </div>
-  </div>
-
-  <!-- Меню покупок снизу -->
-  <div id="pvoMenu"></div>
-  <div id="preMenu" style="
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    background:#000; color:#fff; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; z-index:1000;
-    padding: 0 8px;
-  ">
-    <h1 style="font-size:2em; margin-bottom:10px;">Dronefall: UA Defense</h1>
-    <button id="startBtn" style="
-      padding:10px 20px;
-      margin-top: 15px;
-      font-size:18px;
-      margin-bottom: 10px;
-      transform: translateY(-20px);
-      background-color:#28a745;
-      color:#fff;
-      border:none;
-      border-radius:8px;
-      width: 100%;
-      max-width: 220px;
-    ">Старт</button>
-    <div id="legend" style="
-      margin-top: 5px;
-      background: rgba(255,255,255,0.05);
-      padding: 12px 10px;
+  <style>
+    body {
+      background: #181818;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #preMenu {
+      box-shadow: 0 2px 24px #000a;
+      border-radius: 18px;
+      max-width: 440px;
+      margin: auto;
+      padding: 18px 12px;
+      background: #232323e6;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000;
+    }
+    #preMenu h1 {
+      font-size: 2.2em;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #000a;
+    }
+    #startBtn {
+      padding: 12px 24px;
+      margin-top: 18px;
+      font-size: 20px;
+      margin-bottom: 12px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
       border-radius: 10px;
-      font-size: 15px;
-      max-width: 400px;
+      width: 100%;
+      max-width: 240px;
+      box-shadow: 0 2px 8px #0005;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #startBtn:hover {
+      background-color: #218838;
+    }
+    #legend {
+      margin-top: 8px;
+      background: rgba(255,255,255,0.07);
+      padding: 14px 12px;
+      border-radius: 12px;
+      font-size: 16px;
+      max-width: 420px;
       text-align: left;
       display: flex;
       flex-direction: column;
       width: 100%;
-    ">
+      box-shadow: 0 1px 6px #0002;
+    }
+    #legend b {
+      color: #28a745;
+    }
+    .donate-btn {
+      padding: 12px 24px;
+      font-size: 17px;
+      background-color: #fff;
+      color: #28a745;
+      border: 2px solid #28a745;
+      border-radius: 10px;
+      margin-top: 14px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 240px;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+    }
+    .donate-btn:hover {
+      background: #28a745;
+      color: #fff;
+    }
+    #loading {
+      margin-top: 22px;
+      display: none;
+      width: 100%;
+      max-width: 320px;
+    }
+    #loadingText {
+      font-size: 15px;
+      color: #ccc;
+    }
+    #loadingBar {
+      width: 100%;
+      height: 18px;
+      background: #444;
+      margin-top: 8px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    #loadingProgress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg,#28a745,#0f0);
+      border-radius: 8px;
+      transition: width 0.3s;
+    }
+    @media (max-width: 500px) {
+      #preMenu {
+        max-width: 98vw;
+        padding: 10px 2vw;
+        border-radius: 12px;
+      }
+      #legend {
+        font-size: 13px;
+        padding: 8px 4px;
+        border-radius: 8px;
+      }
+      #startBtn, .donate-btn {
+        font-size: 15px;
+        padding: 8px 10px;
+        max-width: 98vw;
+        border-radius: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="controlPanel" class="panel" style="display:none;">
+    <div id="dragHandle"></div>
+    <div class="panel-body">
+      <div>💰 <span id="money">3000</span></div>
+      <div>🌊 <span id="waveDisplay">1</span></div>
+      <div>🎯 <span id="scoreDisplay">0</span></div>
+      <hr>
+    </div>
+  </div>
+
+  <div id="pvoMenu"></div>
+  <div id="preMenu">
+    <h1>Dronefall: UA Defense</h1>
+    <button id="startBtn">Старт</button>
+    <div id="legend">
       <p style="margin:0;">
         Ви — командир ППО. Завдання: знищувати дрони й ракети до того, як вони досягнуть цілей.<br>
         <b>💰 Гроші</b> — для покупки ППО.<br>
@@ -64,25 +160,14 @@
         Ставте ППО, покращуйте його! Тільки одиниці спроможні захистити всі 5 цілей.
       </p>
     </div>
-    <button onclick="window.open('https://send.monobank.ua/jar/2WuD3CeBTt', '_blank')" style="
-      padding:10px 20px;
-      font-size:16px;
-      background-color:#fff;
-      color:#000;
-      border: 2px solid #28a745;
-      border-radius:8px;
-      margin-top:10px;
-      cursor:pointer;
-      width: 100%;
-      max-width: 220px;
-    ">💚 Донат</button>
+    <button class="donate-btn" onclick="window.open('https://send.monobank.ua/jar/2WuD3CeBTt', '_blank')">💚 Донат</button>
     <div style="font-size: 13px; color: #ccc; margin-top: 12px; text-align: center;">
       🧠 Ця гра створена на 95% за допомогою штучного інтелекту ChatGPT
     </div>
-    <div id="loading" style="margin-top:20px; display:none; width:100%; max-width:300px;">
-      <div id="loadingText" style="font-size:14px;">Завантаження: 0%</div>
-      <div id="loadingBar" style="width:100%; height:20px; background:#555; margin-top:10px;">
-        <div id="loadingProgress" style="width:0%; height:100%; background:#0f0;"></div>
+    <div id="loading">
+      <div id="loadingText">Завантаження: 0%</div>
+      <div id="loadingBar">
+        <div id="loadingProgress"></div>
       </div>
     </div>
   </div>
