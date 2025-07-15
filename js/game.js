@@ -523,47 +523,15 @@ function spawnWave(droneCount = 3, rocketCount = 0) {
   }
 
   // === Shahed 238 ===
+  // УДАЛИТЬ или закомментировать этот блок:
+  /*
   if (waveNumber >= 2) {
-    // Количество Shahed: от 1, растет с волной, но не чаще обычных дронов
-    // Например: 1 на 2-3 волне, 2 на 4-6, 3 на 7-9 и т.д.
     const shahedCount = Math.floor((waveNumber - 1) / 3) + 1;
-
     for (let i = 0; i < shahedCount; i++) {
-      // Случайная сторона (right, top, bottom)
-      const directions = ["right", "top", "bottom"];
-      const dir = directions[Math.floor(Math.random() * directions.length)];
-      let startLat, startLng;
-      if (dir === "right") {
-        startLat = Math.random() * 2829;
-        startLng = 4000 + Math.random() * 200;
-      } else if (dir === "bottom") {
-        startLat = 2829 + Math.random() * 200;
-        startLng = 1200 + Math.random() * (4000 - 1200);
-      } else if (dir === "top") {
-        startLat = -100 + Math.random() * 100;
-        startLng = 1200 + Math.random() * (4000 - 1200);
-      }
-
-      const dp = defensePoints.filter(p => p.alive);
-      const target = dp[Math.floor(Math.random() * dp.length)];
-
-      drones.push({
-        type: "shahed238",
-        position: [startLat, startLng],
-        marker: L.marker([startLat, startLng], {
-          icon: L.divIcon({
-            className: "rotating-icon",
-            html: `<img src="assets/shahed238.png" width="40" height="40" />`,
-            iconSize: [40, 40],
-            iconAnchor: [20, 20]
-          })
-        }).addTo(map),
-        target: [target.lat, target.lng],
-        speed: (0.45 + Math.random() * 0.18) + waveNumber * 0.01, // быстрее обычного дрона
-        hp: 13 + waveNumber * 10 // как у обычного дрона
-      });
+      // ...код генерации Shahed 238...
     }
   }
+  */
 
   // --- Ракеты ---
   for (let i = 0; i < rocketCount; i++) {
@@ -660,9 +628,9 @@ function startWave() {
   }
 
   // ✅ Переместить одну живую цель на 13-й волне
-  //if (currentWave === 10) { // так как массив с 0, а 13-я волна имеет индекс 12
-  //  relocateDefensePoint(); // твоя функция
- // }
+  //if (currentWave === 10) {
+  //  relocateDefensePoint();
+  // }
 
   const droneCount = 5 + currentWave * 5;
   const rocketCount = currentWave >= 3 ? currentWave - 1 : 0;
