@@ -108,7 +108,7 @@ function activateDefensePoint(index) {
   const [lat, lng] = coords;
 
   // 🎯 Ставим маркер
-  const marker = L.marker([lat, lng]).addTo(map).bindPopup("🎯 Ціль");
+  const marker = L.marker([lat, lng]).addTo(map).bindPopup("Ціль");
 
   // 🔴 Добавляем красный круг запрета
   const noBuildCircle = L.circle([lat, lng], {
@@ -163,15 +163,22 @@ const sellPVOButton = document.createElement("button");
 sellPVOButton.id = "sellPVOButton";
 sellPVOButton.textContent = "Продати вибране ППО";
 sellPVOButton.disabled = true;
+sellPVOButton.style.backgroundColor = "#d64b3c";
+sellPVOButton.style.color = "#fff";
 sellPVOButton.style.marginTop = "10px";
+sellPVOButton.style.borderRadius = "8px"; 
 menu.appendChild(sellPVOButton);
 // Создаем кнопку улучшения ПВО
 const upgradePVOButton = document.createElement("button");
 upgradePVOButton.id = "upgradePVOButton";
 upgradePVOButton.textContent = "Покращити вибране ППО (💰100)";
 upgradePVOButton.disabled = true;
+upgradePVOButton.style.backgroundColor = "#5c9143"; 
+upgradePVOButton.style.color = "#fff";
 upgradePVOButton.style.marginTop = "10px";
+upgradePVOButton.style.borderRadius = "8px"; 
 menu.appendChild(upgradePVOButton);
+menu.style.background = "#181818";
 const upgradeInfo = document.createElement("div");
 upgradeInfo.id = "upgradeInfo";
 upgradeInfo.style.marginTop = "5px";
@@ -224,7 +231,22 @@ pvoTypes.forEach((type) => {
   const div = document.createElement("div");
   div.className = "pvo-item";
 
-  // Начальная цена без динамики
+  // Темный стиль для блока покупки ПВО
+  div.style.background = "#232323";
+  div.style.color = "#fff";
+  div.style.border = "1px solid #444";
+  div.style.borderRadius = "10px";
+  div.style.margin = "8px 0";
+  div.style.padding = "8px";
+  div.style.display = "flex";
+  div.style.flexDirection = "column";
+  div.style.alignItems = "center";
+  div.style.cursor = "pointer";
+  div.style.transition = "background 0.2s";
+
+  div.onmouseenter = () => { div.style.background = "#333"; };
+  div.onmouseleave = () => { div.style.background = "#232323"; };
+
   div.innerHTML = `
     <img src="${type.img}" />
     <b>${type.name}</b><br/>
@@ -247,12 +269,11 @@ pvoTypes.forEach((type) => {
     document.querySelectorAll('.pvo-item').forEach(item => item.classList.remove('selected'));
     div.classList.add('selected');
 
-    sellPVOButton.disabled = true; // пока покупаем - продажа отключена
+    sellPVOButton.disabled = true;
   };
 
   menu.appendChild(div);
 });
-
 
 
 const pvoList = [];
