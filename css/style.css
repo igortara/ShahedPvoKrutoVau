@@ -1,0 +1,137 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+    line-height: 1.4;
+}
+
+#controlPanel, #moneyDisplay {
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+}
+
+
+#map {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Панель управления (старт, рестарт и т.п.) справа сверху */
+#controlPanel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border: 2px solid #666;
+  padding: 10px;
+  z-index: 1001; /* выше меню покупок */
+  width: 220px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-family: sans-serif;
+}
+
+#dragHandle {
+  cursor: move;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Меню покупки ПВО — фиксированное внизу по центру */
+#pvoMenu {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+
+  width: 90%;
+  max-width: 700px;
+  overflow-x: auto;
+}
+
+/* Элементы меню ПВО */
+.pvo-item {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 5px;
+  width: 110px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  background: #f9f9f9;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.pvo-item:hover {
+  transform: scale(1.05);
+  background: #e0f0ff;
+}
+
+.pvo-item img {
+  width: 60px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Деньги внизу слева */
+#moneyDisplay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-weight: bold;
+}
+.pvo-item.selected {
+  border-color: #007bff;
+  background-color: #d0e7ff;
+  box-shadow: 0 0 8px #007bff;
+}
+.rotating-icon img {
+  transition: transform 0.1s linear;
+  transform-origin: center center;
+}
+
+@media (max-width: 500px) {
+  #controlPanel {
+    width: 90%;
+    right: 5%;
+    top: 10px;
+    font-size: 14px;
+  }
+  .pvo-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.5); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+.blinking {
+  animation: blink 0.5s linear infinite;
+}
+<style>
+  #legend p {
+    margin: 3px 0; /* уменьшает отступы между абзацами */
+  }
+</style>
+
+}

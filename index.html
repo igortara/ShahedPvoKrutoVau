@@ -1,0 +1,153 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dronefall: UA Defense | Гра ППО України</title>
+  <meta name="description" content="Dronefall — захоплююча HTML5-гра прямо у браузері. Без реєстрації безкоштовно.">
+  <meta name="keywords" content="ігра, dronefall, онайн, в браузері, без реєстрації, безкоштовно. Грай та перемагай">
+<link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/leaflet.css">
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-52ZMNSVTNM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-52ZMNSVTNM');
+</script>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="controlPanel" class="panel" style="display:none;">
+    
+    <div id="dragHandle">☰ Меню</div>
+    <div class="panel-body">
+      <div>💰 Гроші: <span id="money">3000</span></div>
+      <div>🌊 Хвиля: <span id="waveDisplay">1</span></div>
+      <div>🎯 Рахунок: <span id="scoreDisplay">0</span></div>
+      <hr>
+      <button onclick="restartGame()">🔄 Рестарт</button>
+    </div>
+  </div>
+
+  <!-- Меню покупок снизу -->
+  <div id="pvoMenu"></div>
+<div id="preMenu" style="
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background:#000; color:#fff; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; z-index:1000;
+">
+  <h1>Dronefall: UA Defense</h1>
+<!-- Зелёная кнопка Старт -->
+<button id="startBtn" style="
+  padding:10px 20px;
+  margin-top: 15px;
+  font-size:20px;
+  margin-bottom: 10px;
+  transform: translateY(-20px);
+  background-color:#28a745;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+">Старт</button>
+  
+
+  <!-- 👇 Обучающий блок -->
+<div id="legend" style="
+  margin-top: 5px;
+  background: rgba(255,255,255,0.05);
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  max-width: 400px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+">
+    <p>Ви — командир ППО. Завдання: знищувати дрони й ракети до того, як вони досягнуть цілей. Нові цілі для захисту будуть з'являтися поступо з проходженям гри, завжди будьте на поготові ✅!
+    <br>
+<br>💰 <b>Гроші</b> — для покупки ППО.
+<br>🌊 <b>Хвиля</b> — номер атаки.
+<br>🎯 <b>Рахунок</b> — кількість знищених цілей.
+<br>
+<br>Ставте ППО, покращуйте його! Тільки одиниці спроможні захистити всі 5 цілей.
+  </p></div>
+<button onclick="window.open('https://send.monobank.ua/jar/2WuD3CeBTt', '_blank')" style="
+  padding:10px 20px;
+  font-size:18px;
+  background-color:#fff;
+  color:#000;
+  border: 2px solid #28a745;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+">💚 Донат</button>
+<div style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 14px; color: #ccc; z-index: 9999;">
+  🧠 Ця гра створена на 95% за допомогою штучного інтелекту ChatGPT
+</div>
+
+<div style="position: fixed; bottom: 10px; right: 10px; display: flex; gap: 10px; z-index: 9999;">
+  <a href="https://t.me/Dronefall" target="_blank">
+    <img src="images/telegram-icon.png" width="32" height="32" alt="Telegram">
+  </a>
+  
+  </div>
+  <div id="loading" style="margin-top:20px; display:none;">
+    <div id="loadingText">Завантаження: 0%</div>
+    <div id="loadingBar" style="
+      width:300px; height:20px; background:#555; margin-top:10px;
+    ">
+      <div id="loadingProgress" style="
+        width:0%; height:100%; background:#0f0;
+      "></div>
+    </div>
+  </div>
+</div>
+<audio id="alarmSound" src="media/alarm.mp3"></audio>
+<div id="alarmIndicator" style="
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  display: none;
+  z-index: 10000;
+  width: 60px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+">
+  <div style="
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 4px auto;
+    background: red;
+    border-radius: 50%;
+    animation: pulse 0.4s infinite;
+    box-shadow: 0 0 15px 6px red;
+  "></div>
+  ⚠️ НОВА ХВИЛЯ
+</div>
+
+  <div id="map"></div>
+
+  <!-- 🎵 Фоновая музыка -->
+  <audio id="bg-music" src="media/music.mp3" autoplay="" loop=""></audio>
+
+  <script src="js/leaflet.js"></script>
+  <script src="js/game.js"></script>
+
+  <!-- 🎵 Автовоспроизведение при первом клике -->
+  <script>
+    document.addEventListener('click', () => {
+      const music = document.getElementById('bg-music');
+      if (music && music.paused) {
+        music.play();
+      }
+    }, { once: true });
+  </script>
+  
+
+
+
+</body></html>
