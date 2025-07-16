@@ -308,6 +308,15 @@ for (let dp of defensePoints) {
       return;
     }
 
+    // Лимит на Patriot
+    if (selectedPVO.name === "Patriot") {
+      const patriotCount = pvoList.filter(pvo => pvo.name === "Patriot").length;
+      if (patriotCount >= 5) {
+        alert("❌ Максимум 5 Patriot на карті!");
+        return;
+      }
+    }
+
     const icon = L.icon({
       iconUrl: selectedPVO.img,
       iconSize: [32, 32],
@@ -1429,7 +1438,7 @@ const paths = {
 };
 
 
-const MAX_PVO_COUNT = 20;
+const MAX_PVO_COUNT = 40;
 const waveDisplay = document.getElementById("waveDisplay");
 const scoreDisplay = document.getElementById("scoreDisplay");
 const moneyDisplay = document.getElementById("money");
@@ -1495,8 +1504,6 @@ const allowedSpawnPoints = [
   [1400, 3000] ,
   [1300, 3000] 
 ];
-
-
 
 const controlPanel = document.getElementById("controlPanel");
 const dragHandle = document.getElementById("dragHandle");
