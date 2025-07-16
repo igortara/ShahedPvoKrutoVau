@@ -457,6 +457,11 @@ const shahed238Icon = L.icon({
   iconSize: [32, 32],
   iconAnchor: [16, 16]
 });
+const kinshalIcon = L.icon({
+  iconUrl: "assets/kinshal.png", // добавьте иконку в assets
+  iconSize: [30, 30],
+  iconAnchor: [15, 15]
+})
 
 function spawnWave(droneCount = 3, rocketCount = 0) {
   // --- 1 дрон с левой стороны (обязательный) только начиная с 3-й волны ---
@@ -749,7 +754,7 @@ function moveDrones(ts = 0) {
   drones.forEach((drone, index) => {
     if (drone.hp <= 0) {
       const explosion = L.marker(drone.position, {
-        icon: L.icon({ iconUrl: "assets/explosion.gif", iconSize: [40, 40], iconAnchor: [20, 20] })
+        icon: L.icon({ iconUrl: "game_assets/explosion.gif", iconSize: [40, 40], iconAnchor: [20, 20] })
       }).addTo(map);
       setTimeout(() => map.removeLayer(explosion), 600);
       map.removeLayer(drone.marker);
