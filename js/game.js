@@ -139,7 +139,7 @@ const pvoTypes = [
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
   { name: "ПЗРК Игла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
-  { name: "THAAD", price: 3000, radius: 300, damage: 65, cd: 1100, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 65, cd: 3000, img: "assets/thaad.png" },
 ];
 const pvoColorMap = {
   "Кулемет": "#52f752",
