@@ -550,8 +550,8 @@ if (waveNumber >= 5) {
         })
       }).addTo(map),
       target: [target.lat, target.lng],
-      speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
-      hp: 300
+      speed: (7 + Math.random() * 0.3) + waveNumber * 0.03,
+      hp: 250
     });
   }
 }
