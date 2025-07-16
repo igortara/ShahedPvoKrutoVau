@@ -137,9 +137,9 @@ const pvoTypes = [
   { name: "С-300", price: 500, radius: 140, damage: 27, cd: 850, img: "assets/pvo3.png" },
   { name: "Patriot", price: 2500, radius: 240, damage: 55, cd: 1050, img: "assets/pvo5.png" },
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
-  { name: "ПЗРК Игла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
+  { name: "ПЗРК гла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
-  { name: "THAAD", price: 3000, radius: 300, damage: 35, cd: 1100, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 1100, img: "assets/thaad.png" },
 ];
 const pvoColorMap = {
   "Кулемет": "#52f752",
@@ -434,7 +434,7 @@ const droneIcon = L.icon({
   iconAnchor: [12, 12]
 });
 const heavyDroneIcon = L.icon({
-  iconUrl: "assets/heavy-drone.png",
+  iconUrl: "assets/kinshal.png",
   iconSize: [20, 20],
   iconAnchor: [10, 10],
 });
@@ -459,11 +459,7 @@ const shahed238Icon = L.icon({
   iconSize: [32, 32],
   iconAnchor: [16, 16]
 });
-const kinshalIcon = L.icon({
-  iconUrl: "assets/kinshal.png", // добавьте иконку в assets
-  iconSize: [30, 30],
-  iconAnchor: [15, 15]
-})
+
 
 function spawnWave(droneCount = 3, rocketCount = 0) {
   // --- 1 дрон с левой стороны (обязательный) только начиная с 3-й волны ---
@@ -533,33 +529,33 @@ function spawnWave(droneCount = 3, rocketCount = 0) {
   }
 
   // === ТЯЖЁЛЫЕ ДРОНЫ ===
-  if (waveNumber >= 5) {
-    const heavyCount = waveNumber - 4;
-    for (let i = 0; i < heavyCount; i++) {
-      // Только восточная часть
-      const startLat = Math.random() * 2829;
-      const startLng = 4000 + Math.random() * 200;
+if (waveNumber >= 5) {
+  const heavyCount = waveNumber - 4;
+  for (let i = 0; i < heavyCount; i++) {
+    const startLat = Math.random() * 2829;
+    const startLng = 4000 + Math.random() * 200;
 
-      const dp = defensePoints.filter(p => p.alive);
-      const target = dp[Math.floor(Math.random() * dp.length)];
+    const dp = defensePoints.filter(p => p.alive);
+    const target = dp[Math.floor(Math.random() * dp.length)];
 
-      drones.push({
-        type: "heavy",
-        position: [startLat, startLng],
-        marker: L.marker([startLat, startLng], {
-          icon: L.divIcon({
-            className: "rotating-icon",
-            html: `<img src="assets/heavy-drone.png" width="40" height="40" />`,
-            iconSize: [40, 40],
-            iconAnchor: [20, 20]
-          })
-        }).addTo(map),
-        target: [target.lat, target.lng],
-        speed: (0.15 + Math.random() * 0.21) + waveNumber * 0.01,
-        hp: 220 + waveNumber * 27
-      });
-    }
+    drones.push({
+      type: "kinzhal",
+      position: [startLat, startLng],
+      marker: L.marker([startLat, startLng], {
+        icon: L.divIcon({
+          className: "rotating-icon",
+          html: `<img src="assets/kinshal.png" width="40" height="40" />`,
+          iconSize: [70, 70],
+          iconAnchor: [20, 20]
+        })
+      }).addTo(map),
+      target: [target.lat, target.lng],
+      speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
+      hp: 300
+    });
   }
+}
+
 
   // === Shahed 238 ===
   // УДАЛИТЬ или закомментировать этот блок:
@@ -859,7 +855,7 @@ if (img) {
         drone.hp -= pvo.damage;
         pvo.lastShot = ts;
         const bulletLine = L.polyline([pvo.latlng, drone.position], {
-  color: "red",
+  color: "#edb355",
   weight: 2,
   opacity: 0.9,
   dashArray: '4, 6' // 4px линия, 6px пробел — имитация очереди пуль
