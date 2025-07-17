@@ -871,8 +871,8 @@ function maneuverDrone(drone) {
   vy /= vlen;
 
   // Перемещаем дрона с его скоростью, учитывая "step" (например, 1 кадр)
-  drone.position[0] += vx * drone.speed * 0.2; // Умножаем на 0.2 чтобы снизить скорость
-  drone.position[1] += vy * drone.speed * 0.2;
+  drone.position[0] += vx * drone.speed * 0.05; // Умножаем на 0.2 чтобы снизить скорость
+  drone.position[1] += vy * drone.speed * 0.05;
 
   if (drone.marker) {
     drone.marker.setLatLng(drone.position);
