@@ -845,6 +845,30 @@ if (img) {
   img.style.transform = `rotate(${angleDeg}deg)`;
 }
 
+drones.forEach(drone => {
+  maneuverDrone(drone); // теперь дрон будет маневрировать
+});
+
+function maneuverDrone(drone) {
+  const maneuverFactor = 0.1;
+  let [x, y] = drone.position;
+  let [targetX, targetY] = drone.target;
+  let dx = targetX - x;
+  let dy = targetY - y;
+  let dist = Math.sqrt(dx * dx + dy * dy);
+  let vx = dx / dist;
+  let vy = dy / dist;
+  vx += (Math.random() - 0.5) * maneuverFactor;
+  vy += (Math.random() - 0.5) * maneuverFactor;
+  let vlen = Math.sqrt(vx * vx + vy * vy);
+  vx /= vlen;
+  vy /= vlen;
+  drone.position[0] += vx * drone.speed;
+  drone.position[1] += vy * drone.speed;
+  if (drone.marker) {
+    drone.marker.setLatLng(drone.position);
+  }
+}
 
     // ПВО атакуют дрона
     pvoList.forEach(pvo => {
