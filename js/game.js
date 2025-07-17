@@ -1156,7 +1156,7 @@ function createDrone(path) {
     type: "drone",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 0.8,
+    speed: 1,
     hp: 3,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1175,7 +1175,7 @@ function createMissile(path) {
     type: "missile",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 1.2,
+    speed: 1.5,
     hp: 5,
     marker: L.marker(spawn, {
       icon: L.icon({
