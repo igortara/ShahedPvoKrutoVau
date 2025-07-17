@@ -611,6 +611,27 @@ if (waveNumber >= 5) {
   }
 }
 function spawnNuke() {
+
+function spawnKalibr() {
+  const target = defensePoints.find(p => p.alive);
+  if (!target) return;
+  const startPoint = [2829, 2000]; // центр нижней части карты
+  const kalibr = {
+    type: 'kalibr',
+    hp: 3000,
+    speed: 2,
+    position: [...startPoint],
+    target: [target.lat, target.lng],
+    marker: L.marker(startPoint, {
+      icon: L.icon({
+        iconUrl: 'assets/kalibr.png',
+        iconSize: [50, 50],
+        iconAnchor: [25, 25]
+      })
+    }).addTo(map)
+  };
+  rockets.push(kalibr);
+}
   const target = defensePoints.find(p => p.alive);
   if (!target) return;
 
