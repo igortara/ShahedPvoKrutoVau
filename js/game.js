@@ -612,26 +612,6 @@ if (waveNumber >= 5) {
 }
 function spawnNuke() {
 
-function spawnKalibr() {
-  const target = defensePoints.find(p => p.alive);
-  if (!target) return;
-  const startPoint = [2829, 2000]; // центр нижней части карты
-  const kalibr = {
-    type: 'kalibr',
-    hp: 3000,
-    speed: 2,
-    position: [...startPoint],
-    target: [target.lat, target.lng],
-    marker: L.marker(startPoint, {
-      icon: L.icon({
-        iconUrl: 'assets/kalibr.png',
-        iconSize: [50, 50],
-        iconAnchor: [25, 25]
-      })
-    }).addTo(map)
-  };
-  rockets.push(kalibr);
-}
   const target = defensePoints.find(p => p.alive);
   if (!target) return;
 
@@ -1531,6 +1511,18 @@ const allowedSpawnPoints = [
 
 const controlPanel = document.getElementById("controlPanel");
 const dragHandle = document.getElementById("dragHandle");
+
+function changeDroneTarget(drone) {
+  const possibleTargets = defensePoints.filter(p => p.alive);
+  if (possibleTargets.length > 1) {
+    // Выбираем новую цель, отличную от текущей
+    let newTarget;
+    do {
+      newTarget = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+    } while (newTarget.lat === drone.target[0] && newTarget.lng === drone.target[1]);
+    drone.target = [newTarget.lat, newTarget.lng];
+  }
+}
 
 makeDraggable(controlPanel, dragHandle);
 
