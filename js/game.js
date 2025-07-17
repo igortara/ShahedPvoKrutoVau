@@ -1512,18 +1512,33 @@ const allowedSpawnPoints = [
 const controlPanel = document.getElementById("controlPanel");
 const dragHandle = document.getElementById("dragHandle");
 
+//Функция  — выбор новой цели для дрона
 function changeDroneTarget(drone) {
   const possibleTargets = defensePoints.filter(p => p.alive);
-  if (possibleTargets.length > 1) {
-    // Выбираем новую цель, отличную от текущей
-    let newTarget;
-    do {
-      newTarget = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
-    } while (newTarget.lat === drone.target[0] && newTarget.lng === drone.target[1]);
+  if (possibleTargets.length > 0) {
+    // Выбор случайной новой цели
+    const newTarget = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
     drone.target = [newTarget.lat, newTarget.lng];
   }
 }
 
+// В игровом цикле (например, в функции движения дронов)
+function updateDrones() {
+  drones.forEach(drone => {
+    // С вероятностью 1% или по другому условию — меняем цель
+    if (Math.random() < 0.01) {
+      changeDroneTarget(drone);
+    }
+    // Логика движения к текущей цели
+    moveDroneTowardsTarget(drone);
+  });
+}
+
+// Пример moveDroneTowardsTarget
+function moveDroneTowardsTarget(drone) {
+  // Здесь ваша логика перемещения дрона к drone.target
+  // Например, простое приближение по направлению к цели
+}
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
