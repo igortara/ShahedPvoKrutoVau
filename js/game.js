@@ -64,7 +64,7 @@ startBtn.onclick = () => {
 };
 
 
-
+let map
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
@@ -740,40 +740,6 @@ function pvoFire(ts = performance.now()) {
 function moveDrones(ts = 0) {
   if (gameOver) return;
 
-// Пример: функция движения для одного дрона
-function moveDrone(drone) {
-  // ... Код движения ...
-  // После обновления позиции:
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2); // Показываем текущую скорость дрона
-}
-
-drone.path = [drone.position.slice()]; // при создании
-
-if (!drone.polyline) {
-  drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-} else {
-  drone.polyline.setLatLngs(drone.path);
-}
-
-function moveDrone(drone) {
-  // движение (пример)
-  drone.position[0] += drone.speed * 0.01;
-  drone.position[1] += drone.speed * 0.01;
-  
-  // сохраняем позицию в маршрут
-  drone.path.push(drone.position.slice());
-
-  // обновляем линию маршрута
-  if (!drone.polyline) {
-    drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-  } else {
-    drone.polyline.setLatLngs(drone.path);
-  }
-
-  // обновляем меню скорости
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2);
-}
-
   // Обновляем цели дронов
   drones.forEach(drone => {
     const currentTarget = defensePoints.find(p => p.lat === drone.target[0] && p.lng === drone.target[1]);
@@ -884,31 +850,6 @@ if (img) {
   img.style.transform = `rotate(${angleDeg}deg)`;
 }
 
-drones.forEach(drone => {
-  maneuverDrone(drone); // теперь дрон будет маневрировать
-});
-
-function maneuverDrone(drone) {
-  const maneuverFactor = 0.1;
-  let [x, y] = drone.position;
-  let [targetX, targetY] = drone.target;
-  let dx = targetX - x;
-  let dy = targetY - y;
-  let dist = Math.sqrt(dx * dx + dy * dy);
-
-  // Прямое направление к цели
-  let vx = dx / dist;
-  let vy = dy / dist;
-
-  // Добавляем случайное отклонение
-  vx += (Math.random() - 0.5) * maneuverFactor;
-  vy += (Math.random() - 0.5) * maneuverFactor;
-
-  // Нормализуем вектор направления
-  let vlen = Math.sqrt(vx * vx + vy * vy);
-  vx /= vlen;
-  vy /= vlen;
-
   // Перемещаем дрона с его скоростью, учитывая "step" (например, 1 кадр)
   drone.position[0] += vx * drone.speed * 0.05; // Умножаем на 0.2 чтобы снизить скорость
   drone.position[1] += vy * drone.speed * 0.05;
@@ -917,6 +858,41 @@ function maneuverDrone(drone) {
     drone.marker.setLatLng(drone.position);
   }
 }
+
+// Пример: функция движения для одного дрона
+function moveDrone(drone) {
+  // ... Код движения ...
+  // После обновления позиции:
+  document.getElementById('speed-value').textContent = drone.speed.toFixed(2); // Показываем текущую скорость дрона
+}
+
+drone.path = [drone.position.slice()]; // при создании
+
+if (!drone.polyline) {
+  drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
+} else {
+  drone.polyline.setLatLngs(drone.path);
+}
+
+function moveDrone(drone) {
+  // движение (пример)
+  drone.position[0] += drone.speed * 0.01;
+  drone.position[1] += drone.speed * 0.01;
+  
+  // сохраняем позицию в маршрут
+  drone.path.push(drone.position.slice());
+
+  // обновляем линию маршрута
+  if (!drone.polyline) {
+    drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
+  } else {
+    drone.polyline.setLatLngs(drone.path);
+  }
+
+  // обновляем меню скорости
+  document.getElementById('speed-value').textContent = drone.speed.toFixed(2);
+}
+
 
     // ПВО атакуют дрона
     pvoList.forEach(pvo => {
@@ -1614,3 +1590,4 @@ function moveDroneTowardsTarget(drone) {
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
+}
