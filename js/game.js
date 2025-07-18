@@ -845,31 +845,6 @@ if (img) {
   img.style.transform = `rotate(${angleDeg}deg)`;
 }
 
-drones.forEach(drone => {
-  maneuverDrone(drone); // теперь дрон будет маневрировать
-});
-
-function maneuverDrone(drone) {
-  const maneuverFactor = 0.1;
-  let [x, y] = drone.position;
-  let [targetX, targetY] = drone.target;
-  let dx = targetX - x;
-  let dy = targetY - y;
-  let dist = Math.sqrt(dx * dx + dy * dy);
-
-  // Прямое направление к цели
-  let vx = dx / dist;
-  let vy = dy / dist;
-
-  // Добавляем случайное отклонение
-  vx += (Math.random() - 0.5) * maneuverFactor;
-  vy += (Math.random() - 0.5) * maneuverFactor;
-
-  // Нормализуем вектор направления
-  let vlen = Math.sqrt(vx * vx + vy * vy);
-  vx /= vlen;
-  vy /= vlen;
-
   // Перемещаем дрона с его скоростью, учитывая "step" (например, 1 кадр)
   drone.position[0] += vx * drone.speed * 0.05; // Умножаем на 0.2 чтобы снизить скорость
   drone.position[1] += vy * drone.speed * 0.05;
