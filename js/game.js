@@ -735,40 +735,6 @@ function pvoFire(ts = performance.now()) {
 function moveDrones(ts = 0) {
   if (gameOver) return;
 
-// Пример: функция движения для одного дрона
-function moveDrone(drone) {
-  // ... Код движения ...
-  // После обновления позиции:
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2); // Показываем текущую скорость дрона
-}
-
-drone.path = [drone.position.slice()]; // при создании
-
-if (!drone.polyline) {
-  drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-} else {
-  drone.polyline.setLatLngs(drone.path);
-}
-
-function moveDrone(drone) {
-  // движение (пример)
-  drone.position[0] += drone.speed * 0.01;
-  drone.position[1] += drone.speed * 0.01;
-  
-  // сохраняем позицию в маршрут
-  drone.path.push(drone.position.slice());
-
-  // обновляем линию маршрута
-  if (!drone.polyline) {
-    drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-  } else {
-    drone.polyline.setLatLngs(drone.path);
-  }
-
-  // обновляем меню скорости
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2);
-}
-
   // Обновляем цели дронов
   drones.forEach(drone => {
     const currentTarget = defensePoints.find(p => p.lat === drone.target[0] && p.lng === drone.target[1]);
