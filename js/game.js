@@ -550,8 +550,13 @@ if (waveNumber >= 5) {
         })
       }).addTo(map),
       target: [target.lat, target.lng],
+<<<<<<< HEAD
       speed: (5 + Math.random() * 0.3) + waveNumber * 0.03,
       hp: 250
+=======
+      speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
+      hp: 300
+>>>>>>> parent of d29678f (Kindzal changed)
     });
   }
 }
