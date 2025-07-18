@@ -64,7 +64,7 @@ startBtn.onclick = () => {
 };
 
 
-
+let map
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
