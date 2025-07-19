@@ -63,18 +63,10 @@ startBtn.onclick = () => {
   });
 };
 
-
 let map; // строка 67
 
 function initializeMapAndGame() {
-  ...
-}
-
-startBtn.onclick = () => {
-  ...
-  initializeMapAndGame(); // ✅ теперь вызов сработает
-}
-
+  gameStartTime = performance.now();
 
   map = L.map('map', {
     crs: L.CRS.Simple,
