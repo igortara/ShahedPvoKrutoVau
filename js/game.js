@@ -67,7 +67,14 @@ startBtn.onclick = () => {
 let map; // строка 67
 
 function initializeMapAndGame() {
-  gameStartTime = performance.now();
+  ...
+}
+
+startBtn.onclick = () => {
+  ...
+  initializeMapAndGame(); // ✅ теперь вызов сработает
+}
+
 
   map = L.map('map', {
     crs: L.CRS.Simple,
