@@ -1,5 +1,3 @@
-@@ -1,1516 +1,1516 @@
-// Kyiv Defense Game — адаптировано под пользовательскую PNG-карту (4000x2829), CRS.Simple
 
 let money = 5000;
 let selectedPVO = null;
@@ -63,10 +61,6 @@ startBtn.onclick = () => {
     initializeMapAndGame(); // после загрузки всех картинок
   });
 };
-
-let map; // строка 67
-
-let map
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
@@ -1353,7 +1347,7 @@ function makeDraggable(panel, handle) {
     };
   };
 } startGame(); // Вызов в самом конце
-}
+
 
 const waveSchedule = [10, 30, 50, 70, 120, 170, 220, 270, 320, 370, 420, 470, 520, 570, 620, 670, 720, 750, 810]; // в секундах
 // ==== ВОЛНЫ ====
@@ -1519,4 +1513,3 @@ const dragHandle = document.getElementById("dragHandle");
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
-}
