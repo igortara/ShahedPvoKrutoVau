@@ -1593,4 +1593,3 @@ function moveDroneTowardsTarget(drone) {
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
-}
