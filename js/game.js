@@ -1,3 +1,4 @@
+@@ -1,1516 +1,1516 @@
 // Kyiv Defense Game — адаптировано под пользовательскую PNG-карту (4000x2829), CRS.Simple
 
 let money = 5000;
@@ -64,7 +65,7 @@ startBtn.onclick = () => {
 };
 
 
-let map
+
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
@@ -139,7 +140,8 @@ const pvoTypes = [
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
   { name: "ПЗРК гла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
-  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 2000, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 35, cd: 1100, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 1100, img: "assets/thaad.png" },
 ];
 const pvoColorMap = {
   "Кулемет": "#52f752",
@@ -226,7 +228,7 @@ selectedPVO.rangeCircle.setStyle({
   className: 'no-blur-circle'
     });
   }
-  
+
   updateMoney();
 };
 
@@ -235,7 +237,7 @@ pvoTypes.forEach((type) => {
   const div = document.createElement("div");
   div.className = "pvo-item";
 
-  
+
   div.style.background = "#232323";
   div.style.color = "#fff";
   div.style.border = "1px solid #444";
@@ -424,7 +426,7 @@ updatePvoPurchaseAvailability();
 
   selectedPVO = null;
   sellPVOButton.disabled = true;
-  
+
 };
 
 // === Дроны ===
@@ -550,13 +552,8 @@ if (waveNumber >= 5) {
         })
       }).addTo(map),
       target: [target.lat, target.lng],
-<<<<<<< HEAD
-      speed: (5 + Math.random() * 0.3) + waveNumber * 0.03,
-      hp: 250
-=======
       speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
       hp: 300
->>>>>>> parent of d29678f (Kindzal changed)
     });
   }
 }
@@ -616,7 +613,6 @@ if (waveNumber >= 5) {
   }
 }
 function spawnNuke() {
-
   const target = defensePoints.find(p => p.alive);
   if (!target) return;
 
@@ -820,7 +816,7 @@ let slowed = false;
 pvoList.forEach(pvo => {
   if (pvo.reb) {
     const dx = (drone.position[1] - pvo.latlng.lng);
-    
+
     const dy = (drone.position[0] - pvo.latlng.lat);
     const dist = Math.sqrt(dx * dx + dy * dy);
 
@@ -848,49 +844,6 @@ const img = drone.marker.getElement()?.querySelector('img');
 if (img) {
   img.style.transformOrigin = 'center center';
   img.style.transform = `rotate(${angleDeg}deg)`;
-}
-
-  // Перемещаем дрона с его скоростью, учитывая "step" (например, 1 кадр)
-  drone.position[0] += vx * drone.speed * 0.05; // Умножаем на 0.2 чтобы снизить скорость
-  drone.position[1] += vy * drone.speed * 0.05;
-
-  if (drone.marker) {
-    drone.marker.setLatLng(drone.position);
-  }
-}
-
-// Пример: функция движения для одного дрона
-function moveDrone(drone) {
-  // ... Код движения ...
-  // После обновления позиции:
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2); // Показываем текущую скорость дрона
-}
-
-drone.path = [drone.position.slice()]; // при создании
-
-if (!drone.polyline) {
-  drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-} else {
-  drone.polyline.setLatLngs(drone.path);
-}
-
-function moveDrone(drone) {
-  // движение (пример)
-  drone.position[0] += drone.speed * 0.01;
-  drone.position[1] += drone.speed * 0.01;
-  
-  // сохраняем позицию в маршрут
-  drone.path.push(drone.position.slice());
-
-  // обновляем линию маршрута
-  if (!drone.polyline) {
-    drone.polyline = L.polyline(drone.path, {color: 'red'}).addTo(map);
-  } else {
-    drone.polyline.setLatLngs(drone.path);
-  }
-
-  // обновляем меню скорости
-  document.getElementById('speed-value').textContent = drone.speed.toFixed(2);
 }
 
 
@@ -1205,7 +1158,7 @@ function createDrone(path) {
     type: "drone",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 1,
+    speed: 0.8,
     hp: 3,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1224,7 +1177,7 @@ function createMissile(path) {
     type: "missile",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 1.5,
+    speed: 1.2,
     hp: 5,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1560,34 +1513,6 @@ const allowedSpawnPoints = [
 const controlPanel = document.getElementById("controlPanel");
 const dragHandle = document.getElementById("dragHandle");
 
-//Функция  — выбор новой цели для дрона
-function changeDroneTarget(drone) {
-  const possibleTargets = defensePoints.filter(p => p.alive);
-  if (possibleTargets.length > 0) {
-    // Выбор случайной новой цели
-    const newTarget = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
-    drone.target = [newTarget.lat, newTarget.lng];
-  }
-}
-
-// В игровом цикле (например, в функции движения дронов)
-function updateDrones() {
-  drones.forEach(drone => {
-    // С вероятностью 1% или по другому условию — меняем цель
-    if (Math.random() < 0.01) {
-      changeDroneTarget(drone);
-    }
-    // Логика движения к текущей цели
-    moveDroneTowardsTarget(drone);
-  });
-}
-
-// Пример moveDroneTowardsTarget
-function moveDroneTowardsTarget(drone) {
-  // Здесь ваша логика перемещения дрона к drone.target
-  // Например, простое приближение по направлению к цели
-}
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
-}
