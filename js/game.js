@@ -64,17 +64,21 @@ startBtn.onclick = () => {
   });
 };
 
+let map; // строка 67
 
-
+let map
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
-  // 1. Загружаем карту (без игры)
   map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1.6,
     maxZoom: 4
   });
+
+  // ...
+}
+
 
   const imageBounds = [[0, 0], [2829, 4000]];
   L.imageOverlay("assets/map.png", imageBounds).addTo(map);
@@ -1515,3 +1519,4 @@ const dragHandle = document.getElementById("dragHandle");
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
+}
