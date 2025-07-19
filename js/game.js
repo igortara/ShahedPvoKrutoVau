@@ -69,7 +69,7 @@ function initializeMapAndGame() {
   gameStartTime = performance.now();
 
   // 1. Загружаем карту (без игры)
-  map = L.map('map', {
+  let map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1.6,
     maxZoom: 4
