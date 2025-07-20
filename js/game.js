@@ -76,16 +76,9 @@ function initializeMapAndGame() {
 
 
   // ...
-}
 
 
-<<<<<<< HEAD
-  // ...
-}
 
-
-=======
->>>>>>> parent of 5f25ccb (Fixx)
   const imageBounds = [[0, 0], [2829, 4000]];
   L.imageOverlay("assets/map.png", imageBounds).addTo(map);
   map.fitBounds(imageBounds);
@@ -1359,7 +1352,7 @@ function makeDraggable(panel, handle) {
     };
   };
 } startGame(); // Вызов в самом конце
-}
+
 
 const waveSchedule = [10, 30, 50, 70, 120, 170, 220, 270, 320, 370, 420, 470, 520, 570, 620, 670, 720, 750, 810]; // в секундах
 // ==== ВОЛНЫ ====
