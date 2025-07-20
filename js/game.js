@@ -79,6 +79,10 @@ function initializeMapAndGame() {
 }
 
 
+  // ...
+}
+
+
   const imageBounds = [[0, 0], [2829, 4000]];
   L.imageOverlay("assets/map.png", imageBounds).addTo(map);
   map.fitBounds(imageBounds);
@@ -235,6 +239,7 @@ selectedPVO.rangeCircle.setStyle({
     });
   }
 
+
   updateMoney();
 };
 
@@ -242,6 +247,7 @@ selectedPVO.rangeCircle.setStyle({
 pvoTypes.forEach((type) => {
   const div = document.createElement("div");
   div.className = "pvo-item";
+
 
 
   div.style.background = "#232323";
@@ -433,6 +439,7 @@ updatePvoPurchaseAvailability();
   selectedPVO = null;
   sellPVOButton.disabled = true;
 
+
 };
 
 // === Дроны ===
@@ -558,6 +565,8 @@ if (waveNumber >= 5) {
         })
       }).addTo(map),
       target: [target.lat, target.lng],
+      speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
+      hp: 300
       speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
       hp: 300
     });
@@ -822,6 +831,7 @@ let slowed = false;
 pvoList.forEach(pvo => {
   if (pvo.reb) {
     const dx = (drone.position[1] - pvo.latlng.lng);
+
 
     const dy = (drone.position[0] - pvo.latlng.lat);
     const dist = Math.sqrt(dx * dx + dy * dy);
@@ -1165,6 +1175,7 @@ function createDrone(path) {
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
     speed: 0.8,
+    speed: 0.8,
     hp: 3,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1183,6 +1194,7 @@ function createMissile(path) {
     type: "missile",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
+    speed: 1.2,
     speed: 1.2,
     hp: 5,
     marker: L.marker(spawn, {
@@ -1356,6 +1368,7 @@ function makeDraggable(panel, handle) {
     };
   };
 } startGame(); // Вызов в самом конце
+
 
 
 const waveSchedule = [10, 30, 50, 70, 120, 170, 220, 270, 320, 370, 420, 470, 520, 570, 620, 670, 720, 750, 810]; // в секундах
