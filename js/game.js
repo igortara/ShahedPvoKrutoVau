@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 @@ -1,1516 +1,1516 @@
 // Kyiv Defense Game — адаптировано под пользовательскую PNG-карту (4000x2829), CRS.Simple
+=======
+>>>>>>> parent of 5f25ccb (Fixx)
 
 let money = 5000;
 let selectedPVO = null;
@@ -63,18 +66,18 @@ startBtn.onclick = () => {
     initializeMapAndGame(); // после загрузки всех картинок
   });
 };
-
-
-
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
-  // 1. Загружаем карту (без игры)
   map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1.6,
     maxZoom: 4
   });
+
+  // ...
+}
+
 
   const imageBounds = [[0, 0], [2829, 4000]];
   L.imageOverlay("assets/map.png", imageBounds).addTo(map);
@@ -140,7 +143,10 @@ const pvoTypes = [
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
   { name: "ПЗРК гла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
+<<<<<<< HEAD
   { name: "THAAD", price: 3000, radius: 300, damage: 35, cd: 1100, img: "assets/thaad.png" },
+=======
+>>>>>>> parent of 5f25ccb (Fixx)
   { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 1100, img: "assets/thaad.png" },
 ];
 const pvoColorMap = {
@@ -1350,7 +1356,7 @@ function makeDraggable(panel, handle) {
     };
   };
 } startGame(); // Вызов в самом конце
-}
+
 
 const waveSchedule = [10, 30, 50, 70, 120, 170, 220, 270, 320, 370, 420, 470, 520, 570, 620, 670, 720, 750, 810]; // в секундах
 // ==== ВОЛНЫ ====
