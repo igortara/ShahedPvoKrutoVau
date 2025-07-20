@@ -1,3 +1,4 @@
+@@ -1,1516 +1,1516 @@
 // Kyiv Defense Game — адаптировано под пользовательскую PNG-карту (4000x2829), CRS.Simple
 
 let money = 5000;
@@ -139,7 +140,8 @@ const pvoTypes = [
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
   { name: "ПЗРК гла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
-  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 2000, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 35, cd: 1100, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 1100, img: "assets/thaad.png" },
 ];
 const pvoColorMap = {
   "Кулемет": "#52f752",
@@ -226,7 +228,7 @@ selectedPVO.rangeCircle.setStyle({
   className: 'no-blur-circle'
     });
   }
-  
+
   updateMoney();
 };
 
@@ -235,7 +237,7 @@ pvoTypes.forEach((type) => {
   const div = document.createElement("div");
   div.className = "pvo-item";
 
-  
+
   div.style.background = "#232323";
   div.style.color = "#fff";
   div.style.border = "1px solid #444";
@@ -424,7 +426,7 @@ updatePvoPurchaseAvailability();
 
   selectedPVO = null;
   sellPVOButton.disabled = true;
-  
+
 };
 
 // === Дроны ===
@@ -550,8 +552,8 @@ if (waveNumber >= 5) {
         })
       }).addTo(map),
       target: [target.lat, target.lng],
-      speed: (5 + Math.random() * 0.3) + waveNumber * 0.03,
-      hp: 250
+      speed: (10 + Math.random() * 0.3) + waveNumber * 0.03,
+      hp: 300
     });
   }
 }
@@ -814,7 +816,7 @@ let slowed = false;
 pvoList.forEach(pvo => {
   if (pvo.reb) {
     const dx = (drone.position[1] - pvo.latlng.lng);
-    
+
     const dy = (drone.position[0] - pvo.latlng.lat);
     const dist = Math.sqrt(dx * dx + dy * dy);
 
@@ -1156,7 +1158,7 @@ function createDrone(path) {
     type: "drone",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 1,
+    speed: 0.8,
     hp: 3,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1175,7 +1177,7 @@ function createMissile(path) {
     type: "missile",
     position: [...spawn],
     target: getClosestAliveTarget(spawn),
-    speed: 1.5,
+    speed: 1.2,
     hp: 5,
     marker: L.marker(spawn, {
       icon: L.icon({
@@ -1447,8 +1449,12 @@ const scoreDisplay = document.getElementById("scoreDisplay");
 const moneyDisplay = document.getElementById("money");
 
 function updateMoney() {
+  if (isNaN(money) || money < 0) {
+    money = 0; // аварийное восстановление
+  }
   moneyDisplay.textContent = money;
 }
+
 
 function updateUI() {
   updateMoney();
@@ -1468,7 +1474,7 @@ function showVictoryScreen(text = "🎉 Перемога!") {
   div.style.left = "50%";
   div.style.transform = "translate(-50%, -50%)";
   div.style.padding = "30px";
-  div.style.background = "white";
+  div.style.color = "#000"; // черный текст
   div.style.border = "3px solid green";
   div.style.zIndex = "9999";
   div.style.fontSize = "24px";
