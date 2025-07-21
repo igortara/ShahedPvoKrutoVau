@@ -62,22 +62,18 @@ startBtn.onclick = () => {
     initializeMapAndGame(); // после загрузки всех картинок
   });
 };
+
+
+
 function initializeMapAndGame() {
   gameStartTime = performance.now();
 
+  // 1. Загружаем карту (без игры)
   map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -1.6,
     maxZoom: 4
   });
-
-  // ...
-}
-
-
-  // ...
-
-
 
   const imageBounds = [[0, 0], [2829, 4000]];
   L.imageOverlay("assets/map.png", imageBounds).addTo(map);
@@ -1352,7 +1348,7 @@ function makeDraggable(panel, handle) {
     };
   };
 } startGame(); // Вызов в самом конце
-
+}
 
 const waveSchedule = [10, 30, 50, 70, 120, 170, 220, 270, 320, 370, 420, 470, 520, 570, 620, 670, 720, 750, 810]; // в секундах
 // ==== ВОЛНЫ ====
@@ -1451,12 +1447,8 @@ const scoreDisplay = document.getElementById("scoreDisplay");
 const moneyDisplay = document.getElementById("money");
 
 function updateMoney() {
-  if (isNaN(money) || money < 0) {
-    money = 0; // аварийное восстановление
-  }
   moneyDisplay.textContent = money;
 }
-
 
 function updateUI() {
   updateMoney();
@@ -1476,7 +1468,7 @@ function showVictoryScreen(text = "🎉 Перемога!") {
   div.style.left = "50%";
   div.style.transform = "translate(-50%, -50%)";
   div.style.padding = "30px";
-  div.style.color = "#000"; // черный текст
+  div.style.background = "white";
   div.style.border = "3px solid green";
   div.style.zIndex = "9999";
   div.style.fontSize = "24px";
