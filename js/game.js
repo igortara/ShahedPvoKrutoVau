@@ -1227,7 +1227,7 @@ function checkVictory() {
     // Добавим кнопку доната
     message += `
       <br><br>
-      <button onclick="window.open('https://send.monobank.ua/jar/2WuD3CeBTt', '_blank')" 
+      <button onclick="window.open('https://send.monobank.ua/jar/6vUroyDvQL', '_blank')" 
         style="padding:10px 20px; font-size:16px; background-color:#28a745; color:#fff; border:none; border-radius:8px; cursor:pointer;">
         💚 Донат на ППО
       </button>
@@ -1297,7 +1297,7 @@ function endGame() {
     <div style="font-size:18px; text-align:center;">
       🟥 <b>Гра закінчена!</b><br>Всі цілі знищено :(
       <br><br>
-      <button onclick="window.open('https://send.monobank.ua/jar/2WuD3CeBTt', '_blank')" 
+      <button onclick="window.open('https://send.monobank.ua/jar/6vUroyDvQL', '_blank')" 
         style="padding:10px 20px; font-size:16px; background-color:#28a745; color:#fff; border:none; border-radius:8px; cursor:pointer; margin-bottom:10px;">
         💚 Донат на ЗСУ
       </button>
