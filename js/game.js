@@ -137,9 +137,12 @@ const pvoTypes = [
   { name: "С-300", price: 500, radius: 140, damage: 27, cd: 850, img: "assets/pvo3.png" },
   { name: "Patriot", price: 2500, radius: 240, damage: 55, cd: 1050, img: "assets/pvo5.png" },
   { name: "ЗРК Оса", price: 1300, radius: 160, damage: 40, cd: 850, img: "assets/osa.png" }, 
-  { name: "ПЗРК гла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
+  { name: "ПЗРК Iгла", price: 300, radius: 65, damage: 45, cd: 4000, img: "assets/igla.png" }, // ← новый объект
+  { name: "ПЗРК Стингер", price: 400, radius: 70, damage: 50, cd: 3500, img: "assets/stinger.png" }, // ← новый объект
+  { name: "ЗРК Стріла-10", price: 600, radius: 90, damage: 60, cd: 3000, img: "assets/strela10.png" }, // ← новый объект
+  { name: "ЗРК Тор", price: 1200, radius: 150, damage: 80, cd: 2000, img: "assets/tor.png" }, // ← новый объект
   { name: "РЕБ", price: 800, radius: 100, damage: 0, cd: 0, reb: true, slowFactor: 0.4, img: "assets/reb.png" },
-  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 2000, img: "assets/thaad.png" },
+  { name: "THAAD", price: 3000, radius: 300, damage: 340, cd: 2000, img: "assets/thaad.png" }, 
 ];
 const pvoColorMap = {
   "Кулемет": "#52f752",
