@@ -1517,3 +1517,75 @@ const dragHandle = document.getElementById("dragHandle");
 makeDraggable(controlPanel, dragHandle);
 
 updateUI();
+
+// В функцию spawnWave добавим спавн фальш-дронов (например, с 4-й волны):
+if (waveNumber >= 4) {
+  const fakeCount = Math.floor(waveNumber / 2);
+  for (let i = 0; i < fakeCount; i++) {
+    const startLat = Math.random() * 2829;
+    const startLng = 4000 + Math.random() * 200;
+    const dp = defensePoints.filter(p => p.alive);
+    const target = dp[Math.floor(Math.random() * dp.length)];
+
+    const marker = L.marker([startLat, startLng], {
+      icon: L.divIcon({
+        className: "rotating-icon",
+        html: `<img src="assets/drone.png" width="40" height="40" style="opacity:0.7;" />`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+      })
+    }).addTo(map);
+
+    drones.push({
+      type: "fake",
+      position: [startLat, startLng],
+      marker,
+      target: [target.lat, target.lng],
+      speed: (0.21 + Math.random() * 0.31) + waveNumber * 0.01,
+      hp: 10 + waveNumber * 5,
+      fakeTimer: 0,
+      visible: true
+    });
+  }
+}
+
+// В moveDrones добавим поведение фальш-дрона:
+drones.forEach((drone, index) => {
+  // ...existing code...
+
+  // === Фальш-дрон: иногда пропадает ===
+  if (drone.type === "fake") {
+    if (!drone.fakeTimer || ts - drone.fakeTimer > 2000 + Math.random() * 2000) {
+      // С вероятностью 30% исчезает на 1-2 сек
+      if (Math.random() < 0.3 && drone.visible) {
+        drone.visible = false;
+        map.removeLayer(drone.marker);
+        drone.fakeTimer = ts;
+      } else if (!drone.visible && ts - drone.fakeTimer > 1000 + Math.random() * 1000) {
+        drone.visible = true;
+        drone.marker.addTo(map);
+        drone.fakeTimer = ts;
+      }
+    }
+    // Если невидим — не двигаем и не стреляем по нему
+    if (!drone.visible) return;
+  }
+
+  // ...existing code...
+
+  // === Если фальш-дрон долетел до цели — просто исчезает, не наносит урон ===
+  if (dist < 1 && drone.type === "fake") {
+    if (drone.marker) map.removeLayer(drone.marker);
+    drones.splice(index, 1);
+    return;
+  }
+
+  // ...existing code...
+
+  // === За сбитие фальш-дрона не даём очки ===
+  if (drone.hp <= 0 && drone.type === "fake") {
+    if (drone.marker) map.removeLayer(drone.marker);
+    drones.splice(index, 1);
+    return;
+  }
+});
