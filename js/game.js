@@ -904,6 +904,11 @@ setTimeout(() => map.removeLayer(bulletLine), 200);
 
   requestAnimationFrame(moveDrones);
 }
+
+if (drone.polyline) {
+  drone.polyline.addLatLng(drone.position);
+}
+
 function updatePvoMenuPrice(name) {
   const count = pvoPurchaseCounts[name] ?? 0; // исправлено
   const dynamicPrice = Math.floor(
