@@ -90,50 +90,6 @@ function initializeMapAndGame() {
   ];
   map.setMaxBounds(paddedBounds);
 
-const shahedPath = [
-  [3000, -100],
-  [2800, 200],
-  [2500, 400],
-  [2200, 600],
-  [2000, 900],
-  [1800, 1200],
-  [1600, 1500],
-  [1400, 1800]
-];
-
-const shahedTrajectory = L.polyline(shahedPath, {
-  color: 'orange',
-  weight: 3,
-  dashArray: '10, 6',
-  opacity: 0.7
-}); // Не додаємо на карту одразу
-
-shahedTrajectory.bindTooltip("🛩️ Траєкторія Shahed", { permanent: true, direction: 'center' });
-
-const toggleShahedBtn = document.createElement("button");
-toggleShahedBtn.textContent = "🔘 Показати траєкторію Shahed";
-toggleShahedBtn.style.marginTop = "10px";
-toggleShahedBtn.style.padding = "6px 12px";
-toggleShahedBtn.style.borderRadius = "6px";
-toggleShahedBtn.style.background = "#444";
-toggleShahedBtn.style.color = "#fff";
-toggleShahedBtn.style.cursor = "pointer";
-
-let shahedVisible = false;
-
-toggleShahedBtn.onclick = () => {
-  if (shahedVisible) {
-    map.removeLayer(shahedTrajectory);
-    toggleShahedBtn.textContent = "🔘 Показати траєкторію Shahed";
-  } else {
-    shahedTrajectory.addTo(map);
-    toggleShahedBtn.textContent = "🟠 Приховати траєкторію Shahed";
-  }
-  shahedVisible = !shahedVisible;
-};
-
-document.querySelector("#controlPanel .panel-body").appendChild(toggleShahedBtn);
-
 // === Цели ===
 function getRandomTargets(arr, count) {
   const shuffled = arr.sort(() => 0.5 - Math.random());
