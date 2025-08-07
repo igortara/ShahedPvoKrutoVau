@@ -611,6 +611,41 @@ if (waveNumber >= 5) {
     });
   }
 }
+
+const startLat = Math.random() * 2829;
+const startLng = 4000 + Math.random() * 200;
+
+const dp = defensePoints.filter(p => p.alive);
+const target = dp[Math.floor(Math.random() * dp.length)];
+
+const startPos = [startLat, startLng];
+
+const marker = L.marker(startPos, {
+  icon: L.divIcon({
+    className: "rotating-icon",
+    html: `<img src="assets/shahed238.png" width="40" height="40" />`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
+  })
+}).addTo(map);
+
+const polyline = L.polyline([startPos], {
+  color: 'orange',
+  weight: 2,
+  dashArray: '6, 4',
+  opacity: 0.8
+}).addTo(map);
+
+drones.push({
+  type: "shahed",
+  position: startPos,
+  marker,
+  polyline,
+  target: [target.lat, target.lng],
+  speed: 0.8 + waveNumber * 0.01,
+  hp: 30 + waveNumber * 5
+});
+
 function spawnNuke() {
   const target = defensePoints.find(p => p.alive);
   if (!target) return;
